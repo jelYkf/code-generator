@@ -1,0 +1,26 @@
+server:
+  port: 8088
+  servlet:
+    # 请求前缀
+    context-path: /generator
+
+spring:
+  application:
+    name: chien-generator
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    master:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/generator?serverTimezone=Asia/Shanghai
+      username: root
+      password: Mysql123.
+      hikari:
+        pool-name: LancerHikariCP1
+        auto-commit: true
+        minimum-idle: 10
+        idle-timeout: 600000
+        max-lifetime: 1800000
+        connection-timeout: 30000
+
+logging:
+  level:
+    com.rune.mapper: debug

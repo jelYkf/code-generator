@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rune.mapper.TableMapper">
+
+
+    <select id="selectTableInfo" resultType="com.rune.domain.bo.TableInfo">
+        SELECT `table_name`,
+               engine,
+               table_comment,
+               create_time
+        FROM information_schema.TABLES
+        WHERE `table_name` = #{tableName}
+          and table_schema = (SELECT DATABASE())
+    </select>
+
+    <select id="selectTableAll" resultType="com.rune.domain.bo.TableInfo">
+        SELECT `table_name`,
+               engine,
+               table_comment,
+               create_time
+        FROM information_schema.TABLES
+        where table_schema = (SELECT DATABASE())
+            LIMIT #{current}
+            , #{pageSize}
+    </select>
+
+    <select id="selectTableAllTest" resultType="com.rune.domain.bo.TableInfo">
+        SELECT `table_name`,
+               engine,
+               table_comment,
+               create_time
+        FROM information_schema.TABLES
+        where table_schema = (SELECT DATABASE())
+    </select>
+
+    <select id="selectTableCount" resultType="integer">
+        SELECT count(*)
+        FROM information_schema.TABLES
+        WHERE table_schema = (SELECT DATABASE())
+    </select>
+
+    <select id="selectColumnInfo" resultType="com.rune.domain.bo.ColumnInfo">
+        SELECT column_name,
+               data_type,
+               column_comment,
+               column_key,
+               extra,
+               is_nullable,
+               column_type
+        FROM information_schema.COLUMNS
+        WHERE table_name = #{tableName}
+          AND table_schema = (SELECT DATABASE())
+        ORDER BY ordinal_position
+    </select>
+
+    <select id="selectColumnInfoPage" resultType="com.rune.domain.bo.ColumnInfo">
+        SELECT column_name,
+               data_type,
+               column_comment,
+               column_key,
+               extra,
+               is_nullable,
+               column_type
+        FROM information_schema.COLUMNS
+        WHERE table_name = #{tableName}
+          AND table_schema = (SELECT DATABASE())
+        ORDER BY ordinal_position
+            LIMIT #{current}
+               , #{pageSize}
+    </select>
+
+    <select id="selectColumnInfoCount" resultType="integer">
+        SELECT count(*)
+        FROM information_schema.COLUMNS
+        WHERE table_name = #{tableName}
+          AND table_schema = (SELECT DATABASE())
+        ORDER BY ordinal_position
+    </select>
+
+</mapper>
